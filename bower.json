@@ -1,0 +1,7 @@
+{
+  "name": "nd802p4-corporate-dashboard",
+  "dependencies": {
+    "ember": "~2.9.0",
+    "ember-cli-shims": "0.1.3"
+  }
+}
