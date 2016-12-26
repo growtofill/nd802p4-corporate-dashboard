@@ -1,8 +1,0 @@
-<div>{{title}}</div>
-<div>
-    <button {{action "sort" sortDef}} class="btn btn-default btn-xs" type="button">↑</button>
-    <button {{action "sort" (concat sortDef ":desc")}} class="btn btn-default btn-xs" type="button">↓</button>
-</div>
-<form>
-    <input oninput={{action "filter"}} />
-</form>

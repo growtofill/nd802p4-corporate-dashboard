@@ -12,32 +12,19 @@ const mapIssues = issues => issues.map(issue => ({
 }));
 
 export default Ember.Controller.extend({
+  issueHeaders: [
+    { title: "Submission Timestamp", prop: "createdAt" },
+    { title: "Customer Name", prop: "userLogin" },
+    { title: "Customer Email Address", prop: "userEmail" },
+    { title: "Description", prop: "title" },
+    { title: "Open/Closed Status", prop: "state" },
+    { title: "Closed Timestamp", prop: "closedAt" },
+    { title: "Employee Name", prop: "assigneeLogin" },
+  ],
   issues: Ember.computed('model', function () {
     const { issues } = this.get('model');
     return mapIssues(issues);
   }),
-  issuesSortDef: ['createdAt:desc'],
-  filters: {},
-  sortedIssues: Ember.computed.sort('filteredIssues', 'issuesSortDef'),
-  filteredIssues: Ember.computed('issues', 'filters', function () {
-    const issues = this.get('issues');
-    const filters = this.get('filters');
-
-    return issues.filter(issue => (
-      Object.keys(filters)
-        .filter(prop => filters[prop])
-        .every(prop => issue[prop].includes(filters[prop]))
-    ));
-  }),
-  actions: {
-    sortIssues(sortDef) {
-      this.set('issuesSortDef', [sortDef]);
-    },
-    filterIssues(prop, filterValue) {
-      const filters = this.get('filters');
-      this.set('filters', Object.assign({}, filters, { [prop]: filterValue }));
-    }
-  },
   pollUrl() {
     const { url } = this.get('model');
     const poll = () => {

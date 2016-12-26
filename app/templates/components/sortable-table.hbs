@@ -1,0 +1,31 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      {{#each headers as |header|}}
+        <th>
+          <div>{{header.title}}</div>
+          <div>
+            <button {{action "sort" header.prop}} class="btn btn-default btn-xs" type="button">↑</button>
+            <button {{action "sort" (concat header.prop ":desc")}} class="btn btn-default btn-xs" type="button">↓</button>
+          </div>
+          <form>
+            <input oninput={{action "filter" header.prop}} />
+          </form>
+        </th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each filteredItems as |item|}}
+      <tr>
+        {{#each-in item as |prop val|}}
+          <td>{{val}}</td>
+        {{/each-in}}
+      </tr>
+    {{else}}
+      <tr>
+        <td colspan={{headers.length}} class="lead text-center">There are no issues matching current filters.</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
