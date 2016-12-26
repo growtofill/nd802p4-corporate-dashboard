@@ -5,6 +5,10 @@ export default Ember.Component.extend({
   actions: {
     sort(sortDef) {
       this.get('onSort')(sortDef);
+    },
+    filter(event) {
+      const sortDef = this.get('sortDef');
+      this.get('onFilter')(sortDef, event.target.value);
     }
   }
 });

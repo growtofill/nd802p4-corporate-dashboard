@@ -16,11 +16,26 @@ export default Ember.Controller.extend({
     const { issues } = this.get('model');
     return mapIssues(issues);
   }),
-  issuesSortDef: ['created_at:desc'],
-  sortedIssues: Ember.computed.sort('issues', 'issuesSortDef'),
+  issuesSortDef: ['createdAt:desc'],
+  filters: {},
+  sortedIssues: Ember.computed.sort('filteredIssues', 'issuesSortDef'),
+  filteredIssues: Ember.computed('issues', 'filters', function () {
+    const issues = this.get('issues');
+    const filters = this.get('filters');
+
+    return issues.filter(issue => (
+      Object.keys(filters)
+        .filter(prop => filters[prop])
+        .every(prop => issue[prop].includes(filters[prop]))
+    ));
+  }),
   actions: {
     sortIssues(sortDef) {
       this.set('issuesSortDef', [sortDef]);
+    },
+    filterIssues(prop, filterValue) {
+      const filters = this.get('filters');
+      this.set('filters', Object.assign({}, filters, { [prop]: filterValue }));
     }
   },
   pollUrl() {
